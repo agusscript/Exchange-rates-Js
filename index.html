@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exchange rates</title>
-    <link rel="stylesheet" href="styles/main.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exchange rates</title>
+  <link rel="stylesheet" href="styles/main.css">
 </head>
+
 <body>
-    <script src="src/script.js"></script>
+  <main>
+    <form>
+      <select name="year" id="year">
+        <option value="">Choose year</option>
+      </select>
+      <select name="month" id="month">
+        <option value="">Choose month</option>
+      </select>
+      <select name="day" id="day">
+        <option value="">Choose day</option>
+      </select>
+      <button id="show" type="submit">Show Results</button>
+    </form>
+  </main>
+  <script src="src/script.js"></script>
 </body>
+
 </html>
