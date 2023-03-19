@@ -1,10 +1,8 @@
-const requestApiURL = "https://api.exchangerate.host/";
 const $inputSelectYear = document.querySelector("#year");
 const $inputSelectMonth = document.querySelector("#month");
 const $inputSelectDay = document.querySelector("#day");
 const currentDate = new Date().toJSON().slice(0, 10);
 const currenttYear = currentDate.slice(0, 4);
-const $currencySelect = document.querySelector("#currency-select");
 
 function getOptionsDate(min, max, select) {
   for (let i = max; i >= min; i--) {
@@ -28,19 +26,43 @@ function getBaseCurrency(currency) {
   return `?base=${currency}`;
 }
 
-function getData(date, currency) {
-  fetch(requestApiURL + date + currency)
-    .then((response) => response.json())
-    .then((responseJSON) => {
-      console.log(responseJSON);
-    });
+async function getApiData(request1, request2) {
+  const requestApiURL = "https://api.exchangerate.host/";
+  const response = await fetch(requestApiURL + request1 + request2);
+  const data = await response.json();
+
+  console.log(data);
 }
 
 document.querySelector("#show").onclick = () => {
+  const $currencySelect = document.querySelector("#currency-select");
   let selectedDate = `${$inputSelectYear.value}-${$inputSelectMonth.value}-${$inputSelectDay.value}`;
   let selectedBaseCurrency = getBaseCurrency($currencySelect.value);
 
-  getData(selectedDate, selectedBaseCurrency);
+  console.log(getApiData(selectedDate, selectedBaseCurrency));
+
+  event.preventDefault();
+};
+
+function getCurrencysToConvert(currency1, currency2) {
+  return `convert?from=${currency1}&to=${currency2}`;
+}
+
+function getAmount(amount) {
+  return `&amount=${amount}`;
+}
+
+document.querySelector("#convert").onclick = () => {
+  const $inputFromCurrency = document.querySelector("#from-currency");
+  const $inputToCurrency = document.querySelector("#to-currency");
+  const $inputAmount = document.querySelector("#amount");
+  let selectedCurrenciesToConvert = getCurrencysToConvert(
+    $inputFromCurrency.value,
+    $inputToCurrency.value
+  );
+  let selectedAmount = getAmount($inputAmount.value);
+
+  getApiData(selectedCurrenciesToConvert, selectedAmount);
 
   event.preventDefault();
 };
