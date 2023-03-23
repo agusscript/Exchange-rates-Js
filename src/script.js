@@ -1,58 +1,51 @@
-const $inputSelectYear = document.querySelector("#year");
-const $inputSelectMonth = document.querySelector("#month");
-const $inputSelectDay = document.querySelector("#day");
-const currentDate = new Date().toJSON().slice(0, 10);
-const currenttYear = currentDate.slice(0, 4);
+const requestApiURL = "https://api.exchangerate.host/";
 
-function getOptionsDate(min, max, select) {
-  for (let i = max; i >= min; i--) {
-    let newOption = document.createElement("option");
-    select.append(newOption);
-    newOption.textContent = i;
-    newOption.value = i;
+function manageRatesData() {
+  const $currencySelect = document.querySelector("#currency-select");
+  let selectedDate = validateDate();
+  let selectedBaseCurrency = getBaseCurrency($currencySelect.value);
 
-    if (newOption.textContent.length === 1) {
-      newOption.textContent = `0${i}`;
-      newOption.value = `0${i}`;
-    }
-  }
+  fetch(requestApiURL + selectedDate + selectedBaseCurrency)
+    .then((response) => response.json())
+    .then((data) => {
+      showRates(data);
+      console.log(data.rates);
+    })
+    .catch((error) => console.error("Failed", error));
 }
 
-getOptionsDate(2000, currenttYear, $inputSelectYear);
-getOptionsDate(1, 12, $inputSelectMonth);
-getOptionsDate(1, 31, $inputSelectDay);
+function showRates(data) {
+  let $tableCurrency = document.querySelector("table");
+  let $titleRatesTable = document.querySelector("caption");
+  $titleRatesTable.textContent = `Exchange rates for "${data.base}" in date: ${data.date}`;
+  Object.keys(data.rates).forEach((currency) => {
+    let currencyTableRow = document.createElement("tr");
+    currencyTableRow.classList.add("currency-row");
+    let currencyCell = document.createElement("td");
+    let valueCell = document.createElement("td");
+    currencyCell.textContent = currency;
+    valueCell.textContent = data.rates[currency];
+    currencyTableRow.append(currencyCell, valueCell); 
+    $tableCurrency.append(currencyTableRow);
+    $tableCurrency.style.display = "block";
+  });
+}
+
+function validateDate() {
+  const $inputDate = document.querySelector("#date");
+  const currentDate = new Date().toJSON().slice(0, 10);
+  if ($inputDate.value === "") {
+    return currentDate;
+  } else {
+    return $inputDate.value;
+  }
+}
 
 function getBaseCurrency(currency) {
   return `?base=${currency}`;
 }
 
-async function getApiData(request1, request2) {
-  const requestApiURL = "https://api.exchangerate.host/";
-  const response = await fetch(requestApiURL + request1 + request2);
-  const data = await response.json();
-
-  console.log(data);
-}
-
-document.querySelector("#show").onclick = () => {
-  const $currencySelect = document.querySelector("#currency-select");
-  let selectedDate = `${$inputSelectYear.value}-${$inputSelectMonth.value}-${$inputSelectDay.value}`;
-  let selectedBaseCurrency = getBaseCurrency($currencySelect.value);
-
-  console.log(getApiData(selectedDate, selectedBaseCurrency));
-
-  event.preventDefault();
-};
-
-function getCurrencysToConvert(currency1, currency2) {
-  return `convert?from=${currency1}&to=${currency2}`;
-}
-
-function getAmount(amount) {
-  return `&amount=${amount}`;
-}
-
-document.querySelector("#convert").onclick = () => {
+function manageConvertCurrenciesData() {
   const $inputFromCurrency = document.querySelector("#from-currency");
   const $inputToCurrency = document.querySelector("#to-currency");
   const $inputAmount = document.querySelector("#amount");
@@ -62,7 +55,38 @@ document.querySelector("#convert").onclick = () => {
   );
   let selectedAmount = getAmount($inputAmount.value);
 
-  getApiData(selectedCurrenciesToConvert, selectedAmount);
+  fetch(requestApiURL + selectedCurrenciesToConvert + selectedAmount)
+    .then((response) => response.json())
+    .then((data) => {
+      showConvertResult(data);
+    })
+    .catch((error) => console.error("Failed", error));
+}
 
+function showConvertResult(data) {
+  let resultText = document.querySelector("h2");
+  resultText.textContent = `${data.result} ${data.query.to}`;
+}
+
+function getCurrencysToConvert(currency1, currency2) {
+  return `convert?from=${currency1}&to=${currency2}`;
+}
+
+function getAmount(amount) {
+  return `&amount=${amount}`;
+}
+
+document.querySelector("#show").onclick = () => {
+  manageRatesData();
+  event.preventDefault();
+};
+
+document.querySelector("#remove").onclick = () => {
+  location.reload();
+  event.preventDefault();
+};
+
+document.querySelector("#convert").onclick = () => {
+  manageConvertCurrenciesData();
   event.preventDefault();
 };
