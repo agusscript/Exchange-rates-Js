@@ -1,13 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exchange rates</title>
-    <link rel="stylesheet" href="styles/main.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="images/noun-exchange-rate-4088716.svg">
+  <title>Exchange rates</title>
+  <link rel="stylesheet" href="styles/main.css">
 </head>
+
 <body>
-    <script src="src/script.js"></script>
+  <div class="overlay"></div>
+  <header>
+    <img class="header-img" src="images/noun-exchange-rate-4088716.svg" alt="currencies graphic">
+    <h1>Exchange Rate</h1>
+  </header>
+
+  <main>
+    <section class="home-section">
+      <div class="container">
+        <img src="images/illustration-exchange.png" alt="exchange rate illustration">
+        <div class="text-container">
+          <h2>Current and historical foreign exchange rates</h2>
+          <p>Currency data delivered are sourced from financial data providers and banks, including the European Central Bank.</p>
+          <button id="see-rates-btn">See Rates</button>
+          <button id="convert-btn">Convert</button>
+        </div>
+      </div>
+    </section>
+    <section class="form-rates-section">
+      <img class="close-menu-img" src="images/icon-close-menu.svg" alt="icon close menu">
+      <form class="form-rates">
+        <label for="date">
+          Select date
+          <input id="date" type="date">
+          (Today default)
+        </label>
+        <label for="currency-select">
+          Select base currency
+          <select name="currency-select" id="currency-select">
+            <option value="EUR">EUR (Default)</option>
+            <option value="USD">USD (US Dollar)</option>
+            <option value="ARS">ARS (Argentine peso)</option>
+            <option value="BRL">BRL (Brazilian real)</option>
+            <option value="MXN">MXN (Mexican peso)</option>
+            <option value="GBP">GBP (Pound sterling)</option>
+            <option value="CAD">CAD (Canadian dollar)</option>
+            <option value="AUD">AUD (Australian dollar)</option>
+            <option value="CHF">CHF (Swiss franc)</option>
+            <option value="JPY">JPY (Japanese yen)</option>
+          </select>
+        </label>
+        <button id="show" type="submit">Show Rates</button>
+      </form>
+      <table>
+        <caption></caption>
+        <tr>
+          <th>Currency</th>
+          <th>Value</th>
+        </tr>
+      </table>
+    </section>
+    <section class="form-convert-section">
+      <img class="close-menu-img" src="images/icon-close-menu.svg" alt="icon close menu">
+      <form class="form-convert">
+        <label for="from-currency">
+          From
+          <input id="from-currency" type="text" maxlength="3" placeholder="currency">
+        </label>
+        <label for="to-currency">
+          To
+          <input id="to-currency" type="text" maxlength="3" placeholder="currency">
+        </label>
+        <label for="amount">
+          Amount
+          <input id="amount" type="number">
+        </label>
+        <button id="convert" type="submit">Convert</button>
+        <p class="result-convert">Result converted</p>
+      </form>
+    </section>
+  </main>
+  <!-- <footer>Coded by</footer> -->
+  <script src="src/script.js"></script>
 </body>
+
 </html>
