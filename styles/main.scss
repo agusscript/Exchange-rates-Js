@@ -123,6 +123,7 @@ main {
 
   .form-rates-section {
     position: absolute;
+    z-index: 1;
     width: 100%;
     max-width: 560px;
     height: 260px;
@@ -281,6 +282,27 @@ main {
         font-weight: 600;
         letter-spacing: 0.1rem;
       }
+    }
+  }
+}
+
+footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+
+  p {
+    margin: 0.8rem;
+
+    a {
+      color: $Light-green;
+      text-decoration: none;
+    }
+  
+    a:hover {
+      text-decoration: underline;
     }
   }
 }
