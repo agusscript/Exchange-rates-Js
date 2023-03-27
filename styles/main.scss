@@ -58,7 +58,7 @@ header {
   padding-top: 1rem;
 
   .header-img {
-    padding-right: 0.3rem;
+    width: 108px;
   }
 
   h1 {
@@ -81,7 +81,7 @@ main {
       justify-content: space-around;
 
       img {
-        width: 580px;
+        width: 50%;
       }
 
       .text-container {
@@ -306,3 +306,5 @@ footer {
     }
   }
 }
+
+@import "media-queries";
