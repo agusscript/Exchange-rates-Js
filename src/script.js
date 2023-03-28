@@ -32,8 +32,8 @@ function showRates(data) {
     $tableCurrency.append(currencyTableRow);
   });
 
-  $tableCurrency.style.display = "block";
-  document.querySelector(".form-rates-section").style.height = "100vh";
+  $tableCurrency.classList.remove("occult");
+  document.querySelector(".form-rates-section").classList.add("max-height");
 }
 
 function validateDate() {
@@ -81,26 +81,27 @@ function getAmount(amount) {
 }
 
 document.querySelector("#see-rates-btn").onclick = () => {
-  ratesForm.style.left = "50%";
-  overlay.style.display = "block";
+  ratesForm.classList.add("show-to-left");
+  overlay.classList.remove("occult");
 };
 
 document.querySelector("#convert-btn").onclick = () => {
-  convertForm.style.left = "50%";
-  overlay.style.display = "block";
+  convertForm.classList.add("show-to-left");
+  overlay.classList.remove("occult");
 };
 
 document.querySelectorAll(".close-menu-img").forEach((e) => {
   e.onclick = () => {
-    ratesForm.style.left = "-100%";
-    convertForm.style.left = "-100%";
-    overlay.style.display = "none";
+    ratesForm.classList.remove("show-to-left");
+    convertForm.classList.remove("show-to-left");
+    overlay.classList.add("occult");
   };
 });
 
 document.querySelector("#show").onclick = () => {
   manageRatesData();
-  ratesForm.querySelector(".form-rates").style.display = "none";
+  ratesForm.querySelector(".form-rates").classList.add("occult");
+  document.querySelector(".form-rates-section").classList.add("move-to-top");
   event.preventDefault();
 };
 
