@@ -41,6 +41,22 @@
         }
       }
     }
+
+    .form-rates-section {
+      transform: translate(-50%, 80%);
+
+      table {
+        padding: 3.5rem 1rem;
+      }
+    }
+
+    .move-to-top {
+      transform: translate(-50%, 0);
+    }
+
+    .form-convert-section {
+      transform: translate(-50%, 80%);
+    }
   }
 
   footer {

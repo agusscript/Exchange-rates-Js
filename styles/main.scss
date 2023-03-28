@@ -28,6 +28,9 @@ $Light-green: rgb(103, 220, 139);
   right: 0;
   background-color: rgba(0, 0, 0, 0.8);
   animation: smoth 0.4s;
+}
+
+.occult {
   display: none;
 }
 
@@ -182,8 +185,12 @@ main {
       }
     }
 
-    table {
+    .occult {
       display: none;
+    }
+
+    table {
+      display: block;
       height: 100%;
       border-collapse: collapse;
       text-align: center;
@@ -213,6 +220,10 @@ main {
         }
       }
     }
+  }
+
+  .max-height {
+    height: 100vh;
   }
 
   .form-convert-section {
@@ -283,6 +294,10 @@ main {
         letter-spacing: 0.1rem;
       }
     }
+  }
+
+  .show-to-left {
+    left: 50%;
   }
 }
 
