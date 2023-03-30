@@ -80,6 +80,25 @@
   }
 }
 
+@media (max-width: 450px) {
+  main {
+    .form-rates-section {
+      table {
+        tr {
+          th {
+            padding: 0.4rem;
+            font-size: 1.1rem;
+          }
+
+          td {
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 400px) {
   main {
     .home-section {

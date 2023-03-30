@@ -1,6 +1,7 @@
 const requestApiURL = "https://api.exchangerate.host/";
 const ratesForm = document.querySelector(".form-rates-section");
 const convertForm = document.querySelector(".form-convert-section");
+const $tableCurrency = document.querySelector("table");
 const overlay = document.querySelector(".overlay");
 
 function manageRatesData() {
@@ -12,28 +13,42 @@ function manageRatesData() {
     .then((response) => response.json())
     .then((data) => {
       showRates(data);
-      console.log(data.rates);
     })
     .catch((error) => console.error("Failed", error));
 }
 
 function showRates(data) {
-  let $tableCurrency = document.querySelector("table");
-  let $titleRatesTable = document.querySelector("caption");
+  const $titleRatesTable = document.querySelector("caption");
   $titleRatesTable.textContent = `Exchange rates for "${data.base}" in date: ${data.date}`;
 
   Object.keys(data.rates).forEach((currency) => {
-    let currencyTableRow = document.createElement("tr");
-    let currencyCell = document.createElement("td");
-    let valueCell = document.createElement("td");
-    currencyCell.textContent = currency;
-    valueCell.textContent = data.rates[currency];
-    currencyTableRow.append(currencyCell, valueCell);
-    $tableCurrency.append(currencyTableRow);
+    showTableData(data, currency);
   });
 
   $tableCurrency.classList.remove("occult");
   document.querySelector(".form-rates-section").classList.add("max-height");
+}
+
+function showTableData(data, currency) {
+  let currenciesTableRow = document.createElement("tr");
+  let flagCell = document.createElement("td");
+  let currencyCell = document.createElement("td");
+  let valueCell = document.createElement("td");
+  let flagImage = document.createElement("img");
+  flagImage.classList.add("flag");
+  flagImage.src = getFlags(currency.slice(0, 2));
+  currencyCell.textContent = `${currency}`;
+  valueCell.textContent = Math.round(data.rates[currency] * 100) / 100;
+  flagCell.append(flagImage);
+  currenciesTableRow.append(flagCell, currencyCell, valueCell);
+  $tableCurrency.append(currenciesTableRow);
+}
+
+function getFlags(currencyCode) {
+  const flagURL =
+    "https://flagsapi.com/";
+
+  return `${flagURL}${currencyCode}/flat/64.png`;
 }
 
 function validateDate() {

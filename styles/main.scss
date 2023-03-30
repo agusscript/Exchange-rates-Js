@@ -2,7 +2,7 @@ $Dark-green: rgb(23, 61, 50);
 $Light-green: rgb(103, 220, 139);
 
 ::-webkit-scrollbar {
-  width: 14px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -140,7 +140,7 @@ main {
     left: -100%;
     transition: all 0.4s;
 
-    img {
+    .close-menu-img {
       position: absolute;
       width: 20px;
       top: 7.5%;
@@ -228,7 +228,7 @@ main {
 
       caption {
         margin: 1rem 0;
-        font-size: 1.05rem;
+        font-size: 1.1rem;
       }
 
       tr {
@@ -243,11 +243,16 @@ main {
 
         td {
           border: 2px solid black;
-          padding: 0.4rem;
+          padding: 0;
           letter-spacing: 0.1rem;
           font-size: 1.1rem;
         }
       }
+    }
+
+    .flag {
+      width: 54px;
+      height: 44px;
     }
   }
 
@@ -259,7 +264,7 @@ main {
     position: absolute;
     width: 100%;
     max-width: 500px;
-    height: 260px;
+    height: 270px;
     top: 50%;
     left: 50%;
     overflow: auto;
@@ -275,7 +280,7 @@ main {
     transition: all 0.4s;
     left: -100%;
 
-    img {
+    .close-menu-img {
       position: absolute;
       width: 20px;
       top: 7%;
@@ -312,6 +317,7 @@ main {
       }
 
       button {
+        margin-top: 0.8rem;
         border: none;
         padding: 0.6rem 1rem;
         font-size: 0.9rem;
