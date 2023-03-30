@@ -54,8 +54,10 @@ function manageConvertCurrenciesData() {
   const $inputFromCurrency = document.querySelector("#from-currency");
   const $inputToCurrency = document.querySelector("#to-currency");
   const $inputAmount = document.querySelector("#amount");
-  let selectedCurrenciesToConvert = 
-  getCurrencysToConvert($inputFromCurrency.value, $inputToCurrency.value);
+  let selectedCurrenciesToConvert = getCurrencysToConvert(
+    $inputFromCurrency.value,
+    $inputToCurrency.value
+  );
   let selectedAmount = getAmount($inputAmount.value);
 
   fetch(requestApiURL + selectedCurrenciesToConvert + selectedAmount)
@@ -68,8 +70,7 @@ function manageConvertCurrenciesData() {
 
 function showConvertResult(data) {
   let resultText = document.querySelector(".result-convert");
-  resultText.textContent = 
-  `${data.query.amount} ${data.query.from} = ${data.result} ${data.query.to}`;
+  resultText.textContent = `${data.query.amount} ${data.query.from} = ${data.result} ${data.query.to}`;
 }
 
 function getCurrencysToConvert(currency1, currency2) {
@@ -80,28 +81,33 @@ function getAmount(amount) {
   return `&amount=${amount}`;
 }
 
+function closeMenu() {
+  document.querySelectorAll(".close-menu-img").forEach((e) => {
+    e.onclick = () => {
+      ratesForm.classList.remove("show-to-left");
+      convertForm.classList.remove("show-to-left");
+      overlay.classList.add("occult");
+    };
+  });
+}
+
 document.querySelector("#see-rates-btn").onclick = () => {
   ratesForm.classList.add("show-to-left");
   overlay.classList.remove("occult");
+  closeMenu();
 };
 
 document.querySelector("#convert-btn").onclick = () => {
   convertForm.classList.add("show-to-left");
   overlay.classList.remove("occult");
+  closeMenu();
 };
-
-document.querySelectorAll(".close-menu-img").forEach((e) => {
-  e.onclick = () => {
-    ratesForm.classList.remove("show-to-left");
-    convertForm.classList.remove("show-to-left");
-    overlay.classList.add("occult");
-  };
-});
 
 document.querySelector("#show").onclick = () => {
   manageRatesData();
   ratesForm.querySelector(".form-rates").classList.add("occult");
   document.querySelector(".form-rates-section").classList.add("move-to-top");
+  ratesForm.querySelector(".close-menu-img").classList.add("move-img");
   event.preventDefault();
 };
 

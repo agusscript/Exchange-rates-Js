@@ -58,11 +58,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 1rem;
-
-  .header-img {
-    width: 108px;
-  }
+  padding-top: 1.6rem;
 
   h1 {
     margin: 0;
@@ -78,7 +74,7 @@ main {
 
     .container {
       width: 100%;
-      height: 64vh;
+      height: 68vh;
       display: flex;
       align-items: center;
       justify-content: space-around;
@@ -147,9 +143,13 @@ main {
     img {
       position: absolute;
       width: 20px;
-      top: 6%;
-      right: 4%;
+      top: 7.5%;
+      right: 4.5%;
       opacity: 0.7;
+    }
+
+    .move-img {
+      top: 3.5%;
     }
 
     img:hover {
@@ -161,10 +161,39 @@ main {
       display: flex;
       align-items: center;
       flex-direction: column;
+      padding: 0 1rem;
+      text-align: center;
 
       label {
         font-size: 1.1rem;
         margin-bottom: 1.2rem;
+      }
+
+      input[type="date"] {
+        color: #1d1d1d;
+        border: 1px solid #ecf0f1;
+        background: #ecf0f1;
+        padding: 4px;
+        display: inline-block;
+        width: 140px;
+      }
+
+      input[type="date"]:focus {
+        color: #495057;
+        background-color: #ffffff;
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+
+      #currency-select {
+        color: #1d1d1d;
+        border: 1px solid #ecf0f1;
+        background: #ecf0f1;
+        padding: 4px;
+        display: inline-block;
+        width: 160px;
+        font-size: 0.9rem;
       }
 
       button {
@@ -195,7 +224,7 @@ main {
       border-collapse: collapse;
       text-align: center;
       margin: 1rem;
-      padding-top: 1rem;
+      padding-top: 2.4rem;
 
       caption {
         margin: 1rem 0;
@@ -229,7 +258,7 @@ main {
   .form-convert-section {
     position: absolute;
     width: 100%;
-    max-width: 560px;
+    max-width: 500px;
     height: 260px;
     top: 50%;
     left: 50%;
@@ -249,8 +278,8 @@ main {
     img {
       position: absolute;
       width: 20px;
-      top: 6%;
-      right: 4%;
+      top: 7%;
+      right: 4.5%;
       opacity: 0.7;
     }
 
@@ -267,8 +296,19 @@ main {
         margin: 1.2rem 0;
       }
 
-      label[for=amount] {
+      label[for="amount"] {
         display: block;
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        color: #1d1d1d;
+        border: 1px solid #ecf0f1;
+        background: #ecf0f1;
+        padding: 4px;
+        display: inline-block;
+        width: 68px;
+        font-size: 1rem;
       }
 
       button {
@@ -315,7 +355,7 @@ footer {
       color: $Light-green;
       text-decoration: none;
     }
-  
+
     a:hover {
       text-decoration: underline;
     }
