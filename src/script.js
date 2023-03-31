@@ -35,6 +35,7 @@ function showTableData(data, currency) {
   let currencyCell = document.createElement("td");
   let valueCell = document.createElement("td");
   let flagImage = document.createElement("img");
+  flagImage.alt = `${currency} flag`;
   flagImage.classList.add("flag");
   flagImage.src = getFlags(currency.slice(0, 2));
   currencyCell.textContent = `${currency}`;
@@ -45,8 +46,7 @@ function showTableData(data, currency) {
 }
 
 function getFlags(currencyCode) {
-  const flagURL =
-    "https://flagsapi.com/";
+  const flagURL = "https://flagsapi.com/";
 
   return `${flagURL}${currencyCode}/flat/64.png`;
 }
@@ -85,7 +85,8 @@ function manageConvertCurrenciesData() {
 
 function showConvertResult(data) {
   let resultText = document.querySelector(".result-convert");
-  resultText.textContent = `${data.query.amount} ${data.query.from} = ${data.result} ${data.query.to}`;
+  resultText.textContent = `${data.query.amount} ${data.query.from} = 
+  ${Math.round(data.result * 100) / 100} ${data.query.to}`;
 }
 
 function getCurrencysToConvert(currency1, currency2) {
