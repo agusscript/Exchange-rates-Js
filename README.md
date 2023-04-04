@@ -45,7 +45,9 @@ Users should be able to:
 ## Tests
 
 ### The UI was tested with 
+<a href="https://www.cypress.io/">
 <img src="https://img.shields.io/badge/-Cypress-gray?style=flat-square&logo=Cypress&logoColor=white" height="30" alt="Cypress"/>
+</a>
 
 ![](images/exchange-tests.png)
 
