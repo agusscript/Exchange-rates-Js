@@ -340,6 +340,11 @@ main {
         font-size: 1.3rem;
         font-weight: 600;
         letter-spacing: 0.1rem;
+        visibility: hidden;
+      }
+
+      .visible {
+        visibility: visible;
       }
     }
   }
