@@ -87,6 +87,7 @@ function showConvertResult(data) {
   let resultText = document.querySelector(".result-convert");
   resultText.textContent = `${data.query.amount} ${data.query.from} = 
   ${Math.round(data.result * 100) / 100} ${data.query.to}`;
+  resultText.classList.add("visible");
 }
 
 function getCurrencysToConvert(currency1, currency2) {
