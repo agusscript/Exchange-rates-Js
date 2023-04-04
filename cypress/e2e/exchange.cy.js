@@ -5,12 +5,21 @@ describe("Exchange rate tests", () => {
     cy.visit("index.html");
   });
 
+  it("Verify that the main page items are showing", () => {
+    cy.get("header").should("be.visible");
+    cy.get(".home-section").should("be.visible");
+    cy.get("footer").should("be.visible");
+
+    cy.get(".overlay").should("not.be.visible");
+  });
+
   it("Verify that the rate table appears correctly", () => {
     cy.get("#see-rates-btn").click();
     cy.get(".overlay").should("not.have.class", "occult");
     cy.get(".form-rates-section").should("have.class", "show-to-left");
 
     cy.get("#show").click();
+
     cy.get("#rates-table").should("not.have.class", "occult");
     cy.get(".form-rates").should("have.class", "occult");
   });
