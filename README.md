@@ -10,7 +10,7 @@ Users should be able to:
 - Look at the different exchange rates in many countries.
 - Convert currencies with specific selected amount
 
-### Screenshots
+## Screenshots
 
 ![](images/active-states.png)
 
@@ -18,14 +18,14 @@ Users should be able to:
 
 ![](images/mobile-design.png)
 
-### Links
+## Links
 
-- [Live site]()
+- Deploy [Live site](https://exchange-rates-js.vercel.app/)
 - Hero image from [Lovepik](https://lovepik.com/)
 - API data from [exchangerate-host](https://exchangerate.host/#/)
 - Flags images from [FlagsApi](https://flagsapi.com/)
 
-### Built with
+## Built with
 
 <p>
  <a href="https://developer.mozilla.org/en-US/docs/Glossary/HTML">
@@ -41,6 +41,13 @@ Users should be able to:
   <img src="https://img.shields.io/badge/-JavaScript-yellow?style=flat-square&logo=Javascript&logoColor=white" height="30" alt="JavaScript"/>
  </a>
 </p>
+
+## Tests
+
+### The UI was tested with 
+<img src="https://img.shields.io/badge/-Cypress-gray?style=flat-square&logo=Cypress&logoColor=white" height="30" alt="Cypress"/>
+
+![](images/exchange-tests.png)
 
 ## Author
 
