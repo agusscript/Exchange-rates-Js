@@ -232,21 +232,27 @@ main {
         font-size: 1.1rem;
       }
 
-      tr {
-        th {
-          padding: 0.8rem;
-          border: 2px solid black;
-          font-size: 1.2rem;
-          background-color: $Light-green;
-          width: 200px;
-          color: black;
+      thead {
+        tr {
+          th {
+            padding: 0.8rem 0;
+            border: 2px solid black;
+            font-size: 1.2rem;
+            background-color: $Light-green;
+            width: 200px;
+            color: black;
+          }
         }
+      }
 
-        td {
-          border: 2px solid black;
-          padding: 0;
-          letter-spacing: 0.1rem;
-          font-size: 1.1rem;
+      tbody {
+        tr {
+          td {
+            border: 2px solid black;
+            padding: 0.5rem 0;
+            letter-spacing: 0.1rem;
+            font-size: 1rem;
+          }
         }
       }
     }
@@ -266,7 +272,7 @@ main {
     position: absolute;
     width: 100%;
     max-width: 500px;
-    height: 270px;
+    height: 300px;
     top: 50%;
     left: 50%;
     overflow: auto;
@@ -303,11 +309,21 @@ main {
         margin: 1.2rem 0;
       }
 
+      #from-currency,
+      #to-currency {
+        color: #1d1d1d;
+        border: 1px solid #ecf0f1;
+        background: #ecf0f1;
+        padding: 4px;
+        display: inline-block;
+        width: 160px;
+        font-size: 0.85rem;
+      }
+
       label[for="amount"] {
         display: block;
       }
 
-      input[type="text"],
       input[type="number"] {
         color: #1d1d1d;
         border: 1px solid #ecf0f1;

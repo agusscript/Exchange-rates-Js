@@ -4,7 +4,7 @@ const convertForm = document.querySelector(".form-convert-section");
 const $tableCurrency = document.querySelector("table");
 const overlay = document.querySelector(".overlay");
 
-function manageRatesData() {
+function getRatesData() {
   const $currencySelect = document.querySelector("#currency-select");
   let selectedDate = validateDate();
   let selectedBaseCurrency = getBaseCurrency($currencySelect.value);
@@ -22,14 +22,14 @@ function showRates(data) {
   $titleRatesTable.textContent = `Exchange rates for "${data.base}" in date: ${data.date}`;
 
   Object.keys(data.rates).forEach((currency) => {
-    showTableData(data, currency);
+    showTableRates(data, currency);
   });
 
   $tableCurrency.classList.remove("occult");
   document.querySelector(".form-rates-section").classList.add("max-height");
 }
 
-function showTableData(data, currency) {
+function showTableRates(data, currency) {
   let currenciesTableRow = document.createElement("tr");
   let flagCell = document.createElement("td");
   let currencyCell = document.createElement("td");
@@ -42,7 +42,7 @@ function showTableData(data, currency) {
   valueCell.textContent = Math.round(data.rates[currency] * 100) / 100;
   flagCell.append(flagImage);
   currenciesTableRow.append(flagCell, currencyCell, valueCell);
-  $tableCurrency.append(currenciesTableRow);
+  $tableCurrency.querySelector("tbody").append(currenciesTableRow);
 }
 
 function getFlags(currencyCode) {
@@ -51,9 +51,16 @@ function getFlags(currencyCode) {
   return `${flagURL}${currencyCode}/flat/64.png`;
 }
 
+function getFlagsManually() {
+  const flags = {
+    eur: "https://flagcdn.com/w320/eu.png",
+  };
+}
+
 function validateDate() {
   const $inputDate = document.querySelector("#date");
   const currentDate = new Date().toJSON().slice(0, 10);
+  $inputDate.setAttribute("max", currentDate);
   if ($inputDate.value === "") {
     return currentDate;
   } else {
@@ -65,13 +72,13 @@ function getBaseCurrency(currency) {
   return `?base=${currency}`;
 }
 
-function manageConvertCurrenciesData() {
-  const $inputFromCurrency = document.querySelector("#from-currency");
-  const $inputToCurrency = document.querySelector("#to-currency");
+function getConvertCurrenciesData() {
+  const $selectFromCurrency = document.querySelector("#from-currency");
+  const $selectToCurrency = document.querySelector("#to-currency");
   const $inputAmount = document.querySelector("#amount");
   let selectedCurrenciesToConvert = getCurrencysToConvert(
-    $inputFromCurrency.value,
-    $inputToCurrency.value
+    $selectFromCurrency.value,
+    $selectToCurrency.value
   );
   let selectedAmount = getAmount($inputAmount.value);
 
@@ -99,18 +106,23 @@ function getAmount(amount) {
 }
 
 function closeMenu() {
+  overlay.onclick = hideMenu;
+
   document.querySelectorAll(".close-menu-img").forEach((e) => {
-    e.onclick = () => {
-      ratesForm.classList.remove("show-to-left");
-      convertForm.classList.remove("show-to-left");
-      overlay.classList.add("occult");
-    };
+    e.onclick = hideMenu;
   });
+}
+
+function hideMenu() {
+  ratesForm.classList.remove("show-to-left");
+  convertForm.classList.remove("show-to-left");
+  overlay.classList.add("occult");
 }
 
 document.querySelector("#see-rates-btn").onclick = () => {
   ratesForm.classList.add("show-to-left");
   overlay.classList.remove("occult");
+  validateDate();
   closeMenu();
 };
 
@@ -121,7 +133,7 @@ document.querySelector("#convert-btn").onclick = () => {
 };
 
 document.querySelector("#show").onclick = () => {
-  manageRatesData();
+  getRatesData();
   ratesForm.querySelector(".form-rates").classList.add("occult");
   document.querySelector(".form-rates-section").classList.add("move-to-top");
   ratesForm.querySelector(".close-menu-img").classList.add("move-img");
@@ -129,6 +141,6 @@ document.querySelector("#show").onclick = () => {
 };
 
 document.querySelector("#convert").onclick = () => {
-  manageConvertCurrenciesData();
+  getConvertCurrenciesData();
   event.preventDefault();
 };

@@ -56,11 +56,15 @@
       </form>
       <table id="rates-table" class="occult">
         <caption></caption>
-        <tr>
-          <th>Country</th>
-          <th>Currency</th>
-          <th>Value</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Currency</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+       <tbody>
+       </tbody>
       </table>
     </section>
     <section class="form-convert-section">
@@ -68,11 +72,33 @@
       <form class="form-convert">
         <label for="from-currency">
           From
-          <input id="from-currency" type="text" maxlength="3" placeholder="Currency">
+          <select name="from-currency" id="from-currency">
+            <option value="EUR">EUR (Euro)</option>
+            <option value="USD">USD (US Dollar)</option>
+            <option value="ARS">ARS (Argentine peso)</option>
+            <option value="BRL">BRL (Brazilian real)</option>
+            <option value="MXN">MXN (Mexican peso)</option>
+            <option value="GBP">GBP (Pound sterling)</option>
+            <option value="CAD">CAD (Canadian dollar)</option>
+            <option value="AUD">AUD (Australian dollar)</option>
+            <option value="CHF">CHF (Swiss franc)</option>
+            <option value="JPY">JPY (Japanese yen)</option>
+          </select>
         </label>
-        <label for="to-currency">
+        <label for="from-currency">
           To
-          <input id="to-currency" type="text" maxlength="3" placeholder="Currency">
+          <select name="to-currency" id="to-currency">
+            <option value="EUR">EUR (Euro)</option>
+            <option value="USD">USD (US Dollar)</option>
+            <option value="ARS">ARS (Argentine peso)</option>
+            <option value="BRL">BRL (Brazilian real)</option>
+            <option value="MXN">MXN (Mexican peso)</option>
+            <option value="GBP">GBP (Pound sterling)</option>
+            <option value="CAD">CAD (Canadian dollar)</option>
+            <option value="AUD">AUD (Australian dollar)</option>
+            <option value="CHF">CHF (Swiss franc)</option>
+            <option value="JPY">JPY (Japanese yen)</option>
+          </select>
         </label>
         <label for="amount">
           Amount
