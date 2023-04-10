@@ -51,12 +51,6 @@ function getFlags(currencyCode) {
   return `${flagURL}${currencyCode}/flat/64.png`;
 }
 
-function getFlagsManually() {
-  const flags = {
-    eur: "https://flagcdn.com/w320/eu.png",
-  };
-}
-
 function validateDate() {
   const $inputDate = document.querySelector("#date");
   const currentDate = new Date().toJSON().slice(0, 10);
