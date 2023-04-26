@@ -26,7 +26,7 @@ function showRates(data) {
   });
 
   $tableCurrency.classList.remove("occult");
-  document.querySelector(".form-rates-section").classList.add("max-height");
+  document.querySelector(".form-rates-section ").classList.add("max-height");
 }
 
 function showTableRates(data, currency) {
