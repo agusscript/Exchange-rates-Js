@@ -131,6 +131,8 @@ document.querySelector("#show").onclick = () => {
   ratesForm.querySelector(".form-rates").classList.add("occult");
   document.querySelector(".form-rates-section").classList.add("move-to-top");
   ratesForm.querySelector(".close-menu-img").classList.add("move-img");
+  ratesForm.querySelector(".back-menu-img").classList.remove("occult");
+  ratesForm.querySelector(".back-menu-img").classList.add("move-img");
   event.preventDefault();
 };
 

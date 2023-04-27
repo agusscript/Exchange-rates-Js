@@ -125,7 +125,7 @@ main {
     position: absolute;
     z-index: 1;
     width: 100%;
-    max-width: 560px;
+    max-width: 600px;
     height: 260px;
     top: 50%;
     left: 50%;
@@ -141,12 +141,21 @@ main {
     left: -100%;
     transition: all 0.4s;
 
-    .close-menu-img {
+    .close-menu-img,
+    .back-menu-img {
       position: absolute;
-      width: 20px;
+      width: 22px;
+      opacity: 0.7;
+    }
+
+    .close-menu-img {
       top: 7.5%;
       right: 4.5%;
-      opacity: 0.7;
+    }
+
+    .back-menu-img {
+      top: 7.5%;
+      left: 4.5%;
     }
 
     .move-img {
@@ -225,7 +234,7 @@ main {
       border-collapse: collapse;
       text-align: center;
       margin: 1rem;
-      padding-top: 2.4rem;
+      padding: 3rem 2rem;
 
       caption {
         margin: 1rem 0;
@@ -271,7 +280,7 @@ main {
   .form-convert-section {
     position: absolute;
     width: 100%;
-    max-width: 500px;
+    max-width: 540px;
     height: 300px;
     top: 50%;
     left: 50%;
@@ -290,7 +299,7 @@ main {
 
     .close-menu-img {
       position: absolute;
-      width: 20px;
+      width: 22px;
       top: 7%;
       right: 4.5%;
       opacity: 0.7;
