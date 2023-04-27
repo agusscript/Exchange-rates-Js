@@ -4,29 +4,25 @@ const convertForm = document.querySelector(".form-convert-section");
 const $tableCurrency = document.querySelector("table");
 const overlay = document.querySelector(".overlay");
 
-function getRatesData() {
-  const $currencySelect = document.querySelector("#currency-select");
-  let selectedDate = validateDate();
-  let selectedBaseCurrency = getBaseCurrency($currencySelect.value);
-
-  fetch(requestApiURL + selectedDate + selectedBaseCurrency)
-    .then((response) => response.json())
-    .then((data) => {
-      showRates(data);
-    })
-    .catch((error) => console.error("Failed", error));
+function getBaseCurrency(currency) {
+  return `?base=${currency}`;
 }
 
-function showRates(data) {
-  const $titleRatesTable = document.querySelector("caption");
-  $titleRatesTable.textContent = `Exchange rates for "${data.base}" in date: ${data.date}`;
+function validateDate() {
+  const $inputDate = document.querySelector("#date");
+  const currentDate = new Date().toJSON().slice(0, 10);
+  $inputDate.setAttribute("max", currentDate);
+  if ($inputDate.value === "") {
+    return currentDate;
+  } else {
+    return $inputDate.value;
+  }
+}
 
-  Object.keys(data.rates).forEach((currency) => {
-    showTableRates(data, currency);
-  });
+function getFlags(currencyCode) {
+  const flagURL = "https://flagsapi.com/";
 
-  $tableCurrency.classList.remove("occult");
-  document.querySelector(".form-rates-section ").classList.add("max-height");
+  return `${flagURL}${currencyCode}/flat/64.png`;
 }
 
 function showTableRates(data, currency) {
@@ -45,25 +41,44 @@ function showTableRates(data, currency) {
   $tableCurrency.querySelector("tbody").append(currenciesTableRow);
 }
 
-function getFlags(currencyCode) {
-  const flagURL = "https://flagsapi.com/";
+function showRates(data) {
+  const $titleRatesTable = document.querySelector("caption");
+  $titleRatesTable.textContent = `Exchange rates for "${data.base}" in date: ${data.date}`;
 
-  return `${flagURL}${currencyCode}/flat/64.png`;
+  Object.keys(data.rates).forEach((currency) => {
+    showTableRates(data, currency);
+  });
+
+  $tableCurrency.classList.remove("occult");
+  document.querySelector(".form-rates-section ").classList.add("max-height");
 }
 
-function validateDate() {
-  const $inputDate = document.querySelector("#date");
-  const currentDate = new Date().toJSON().slice(0, 10);
-  $inputDate.setAttribute("max", currentDate);
-  if ($inputDate.value === "") {
-    return currentDate;
-  } else {
-    return $inputDate.value;
-  }
+function getRatesData() {
+  const $currencySelect = document.querySelector("#currency-select");
+  let selectedDate = validateDate();
+  let selectedBaseCurrency = getBaseCurrency($currencySelect.value);
+
+  fetch(requestApiURL + selectedDate + selectedBaseCurrency)
+    .then((response) => response.json())
+    .then((data) => {
+      showRates(data);
+    })
+    .catch((error) => console.error("Failed", error));
 }
 
-function getBaseCurrency(currency) {
-  return `?base=${currency}`;
+function getCurrencysToConvert(currency1, currency2) {
+  return `convert?from=${currency1}&to=${currency2}`;
+}
+
+function getAmount(amount) {
+  return `&amount=${amount}`;
+}
+
+function showConvertResult(data) {
+  let resultText = document.querySelector(".result-convert");
+  resultText.textContent = `${data.query.amount} ${data.query.from} = 
+  ${Math.round(data.result * 100) / 100} ${data.query.to}`;
+  resultText.classList.add("visible");
 }
 
 function getConvertCurrenciesData() {
@@ -84,19 +99,10 @@ function getConvertCurrenciesData() {
     .catch((error) => console.error("Failed", error));
 }
 
-function showConvertResult(data) {
-  let resultText = document.querySelector(".result-convert");
-  resultText.textContent = `${data.query.amount} ${data.query.from} = 
-  ${Math.round(data.result * 100) / 100} ${data.query.to}`;
-  resultText.classList.add("visible");
-}
-
-function getCurrencysToConvert(currency1, currency2) {
-  return `convert?from=${currency1}&to=${currency2}`;
-}
-
-function getAmount(amount) {
-  return `&amount=${amount}`;
+function hideMenu() {
+  ratesForm.classList.remove("show-to-left");
+  convertForm.classList.remove("show-to-left");
+  overlay.classList.add("occult");
 }
 
 function closeMenu() {
@@ -105,12 +111,6 @@ function closeMenu() {
   document.querySelectorAll(".close-menu-img").forEach((e) => {
     e.onclick = hideMenu;
   });
-}
-
-function hideMenu() {
-  ratesForm.classList.remove("show-to-left");
-  convertForm.classList.remove("show-to-left");
-  overlay.classList.add("occult");
 }
 
 document.querySelector("#see-rates-btn").onclick = () => {
