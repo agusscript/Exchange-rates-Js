@@ -1,8 +1,11 @@
 const requestApiURL = "https://api.exchangerate.host/";
-const ratesForm = document.querySelector(".form-rates-section");
-const convertForm = document.querySelector(".form-convert-section");
-const $tableCurrency = document.querySelector("table");
-const overlay = document.querySelector(".overlay");
+const $ratesFormContainer = document.querySelector(".form-rates-section");
+const $formRates = document.querySelector(".form-rates");
+const $convertForm = document.querySelector(".form-convert-section");
+const $tableCurrency = document.querySelector("#rates-table");
+const $overlay = document.querySelector(".overlay");
+const $backButton = document.querySelector(".back-menu-img");
+const $closeButton = document.querySelector(".close-menu-img");
 
 function getBaseCurrency(currency) {
   return `?base=${currency}`;
@@ -26,19 +29,37 @@ function getFlags(currencyCode) {
 }
 
 function showTableRates(data, currency) {
-  let currenciesTableRow = document.createElement("tr");
-  let flagCell = document.createElement("td");
-  let currencyCell = document.createElement("td");
-  let valueCell = document.createElement("td");
-  let flagImage = document.createElement("img");
+  const currenciesTableRow = document.createElement("tr");
+  const flagCell = document.createElement("td");
+  const currencyCell = document.createElement("td");
+  const valueCell = document.createElement("td");
+  const flagImage = document.createElement("img");
+
   flagImage.alt = `${currency} flag`;
   flagImage.classList.add("flag");
   flagImage.src = getFlags(currency.slice(0, 2));
-  currencyCell.textContent = `${currency}`;
+  currencyCell.textContent = currency;
   valueCell.textContent = Math.round(data.rates[currency] * 100) / 100;
-  flagCell.append(flagImage);
+
+  currenciesTableRow.setAttribute("class", "table-row-currency");
+
+  flagCell.appendChild(flagImage);
   currenciesTableRow.append(flagCell, currencyCell, valueCell);
-  $tableCurrency.querySelector("tbody").append(currenciesTableRow);
+  $tableCurrency.querySelector("tbody").appendChild(currenciesTableRow);
+}
+
+function removeTableRates() {
+  const $currencyTableRows = document.querySelectorAll(".table-row-currency");
+
+  $ratesFormContainer.classList.remove("max-height");
+  $ratesFormContainer.classList.remove("move-to-top");
+  $formRates.classList.remove("occult");
+  $tableCurrency.classList.add("occult");
+  $closeButton.classList.remove("move-img");
+  $backButton.classList.add("occult");
+  $currencyTableRows.forEach((row) => {
+    row.remove();
+  });
 }
 
 function showRates(data) {
@@ -50,7 +71,7 @@ function showRates(data) {
   });
 
   $tableCurrency.classList.remove("occult");
-  document.querySelector(".form-rates-section ").classList.add("max-height");
+  $ratesFormContainer.classList.add("max-height");
 }
 
 function getRatesData() {
@@ -75,7 +96,7 @@ function getAmount(amount) {
 }
 
 function showConvertResult(data) {
-  let resultText = document.querySelector(".result-convert");
+  const resultText = document.querySelector(".result-convert");
   resultText.textContent = `${data.query.amount} ${data.query.from} = 
   ${Math.round(data.result * 100) / 100} ${data.query.to}`;
   resultText.classList.add("visible");
@@ -100,43 +121,47 @@ function getConvertCurrenciesData() {
 }
 
 function hideMenu() {
-  ratesForm.classList.remove("show-to-left");
-  convertForm.classList.remove("show-to-left");
-  overlay.classList.add("occult");
+  $ratesFormContainer.classList.remove("show-to-left");
+  $convertForm.classList.remove("show-to-left");
+  $overlay.classList.add("occult");
 }
 
 function closeMenu() {
-  overlay.onclick = hideMenu;
+  $overlay.onclick = hideMenu;
 
   document.querySelectorAll(".close-menu-img").forEach((e) => {
     e.onclick = hideMenu;
   });
 }
 
-document.querySelector("#see-rates-btn").onclick = () => {
-  ratesForm.classList.add("show-to-left");
-  overlay.classList.remove("occult");
+document.querySelector("#see-rates-btn").addEventListener("click", () => {
+  $ratesFormContainer.classList.add("show-to-left");
+  $overlay.classList.remove("occult");
   validateDate();
   closeMenu();
-};
+});
 
-document.querySelector("#convert-btn").onclick = () => {
-  convertForm.classList.add("show-to-left");
-  overlay.classList.remove("occult");
+document.querySelector("#convert-btn").addEventListener("click", () => {
+  $convertForm.classList.add("show-to-left");
+  $overlay.classList.remove("occult");
   closeMenu();
-};
+});
 
-document.querySelector("#show").onclick = () => {
+document.querySelector("#show").addEventListener("click", () => {
   getRatesData();
-  ratesForm.querySelector(".form-rates").classList.add("occult");
-  document.querySelector(".form-rates-section").classList.add("move-to-top");
-  ratesForm.querySelector(".close-menu-img").classList.add("move-img");
-  ratesForm.querySelector(".back-menu-img").classList.remove("occult");
-  ratesForm.querySelector(".back-menu-img").classList.add("move-img");
+  $formRates.classList.add("occult");
+  $ratesFormContainer.classList.add("move-to-top");
+  $closeButton.classList.add("move-img");
+  $backButton.classList.remove("occult");
+  $backButton.classList.add("move-img");
   event.preventDefault();
-};
+});
 
-document.querySelector("#convert").onclick = () => {
+$backButton.addEventListener("click", () => {
+  removeTableRates();
+});
+
+document.querySelector("#convert").addEventListener("click", () => {
   getConvertCurrenciesData();
   event.preventDefault();
-};
+});
