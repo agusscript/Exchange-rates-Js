@@ -1,4 +1,13 @@
-const requestApiURL = "https://api.exchangerate.host/";
+import {
+  validateDate,
+  getBaseCurrency,
+  getRates,
+  getCurrencysToConvert,
+  getAmount,
+  getConvertData,
+  getFlags,
+} from "./exchange.js";
+
 const $ratesFormContainer = document.querySelector(".form-rates-section");
 const $formRates = document.querySelector(".form-rates");
 const $convertForm = document.querySelector(".form-convert-section");
@@ -6,24 +15,6 @@ const $tableCurrency = document.querySelector("#rates-table");
 const $overlay = document.querySelector(".overlay");
 const $backButton = document.querySelector(".back-menu-img");
 const $closeButton = document.querySelector(".close-menu-img");
-
-
-function validateDate() {
-  const $inputDate = document.querySelector("#date");
-  const currentDate = new Date().toJSON().slice(0, 10);
-  $inputDate.setAttribute("max", currentDate);
-  if ($inputDate.value === "") {
-    return currentDate;
-  } else {
-    return $inputDate.value;
-  }
-}
-
-function getFlags(currencyCode) {
-  const flagURL = "https://flagsapi.com/";
-
-  return `${flagURL}${currencyCode}/flat/64.png`;
-}
 
 function createTableRates(data, currency) {
   const currenciesTableRow = document.createElement("tr");
@@ -71,15 +62,6 @@ function removeTableRates() {
   });
 }
 
-function getBaseCurrency(currency) {
-  return `?base=${currency}`;
-}
-
-function getRates(date, base) {
-  return fetch(requestApiURL + date + base)
-    .then((response) => response.json());
-}
-
 function showRates() {
   const $currencySelect = document.querySelector("#currency-select");
   let selectedDate = validateDate();
@@ -92,14 +74,6 @@ function showRates() {
     .catch((error) => console.error("Failed", error));
 }
 
-function getCurrencysToConvert(currency1, currency2) {
-  return `convert?from=${currency1}&to=${currency2}`;
-}
-
-function getAmount(amount) {
-  return `&amount=${amount}`;
-}
-
 function showConvertResult(data) {
   const resultText = document.querySelector(".result-convert");
   resultText.textContent = `${data.query.amount} ${data.query.from} = 
@@ -107,12 +81,7 @@ function showConvertResult(data) {
   resultText.classList.add("visible");
 }
 
-function getConvertData(currencies, amount) {
-  return fetch(requestApiURL + currencies + amount)
-    .then((response) => response.json());
-}
-
-function getConvertCurrenciesData() {
+function showConvertedCurrencies() {
   const $selectFromCurrency = document.querySelector("#from-currency");
   const $selectToCurrency = document.querySelector("#to-currency");
   const $inputAmount = document.querySelector("#amount");
@@ -171,6 +140,6 @@ $backButton.addEventListener("click", () => {
 });
 
 document.querySelector("#convert").addEventListener("click", () => {
-  getConvertCurrenciesData();
+  showConvertedCurrencies();
   event.preventDefault();
 });
