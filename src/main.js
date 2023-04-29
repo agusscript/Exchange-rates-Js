@@ -1,10 +1,3 @@
-/*
-import {
-  showRates,
-  validateDate,
-} from "./exchange.js";
-*/
-
 const requestApiURL = "https://api.exchangerate.host/";
 const $ratesFormContainer = document.querySelector(".form-rates-section");
 const $formRates = document.querySelector(".form-rates");
@@ -32,7 +25,7 @@ function getFlags(currencyCode) {
   return `${flagURL}${currencyCode}/flat/64.png`;
 }
 
-function showTableRates(data, currency) {
+function createTableRates(data, currency) {
   const currenciesTableRow = document.createElement("tr");
   const flagCell = document.createElement("td");
   const currencyCell = document.createElement("td");
@@ -52,12 +45,12 @@ function showTableRates(data, currency) {
   $tableCurrency.querySelector("tbody").appendChild(currenciesTableRow);
 }
 
-function showRates(data) {
+function showTableRates(data) {
   const $titleRatesTable = document.querySelector("caption");
   $titleRatesTable.textContent = `Exchange rates for "${data.base}" in date: ${data.date}`;
 
   Object.keys(data.rates).forEach((currency) => {
-    showTableRates(data, currency);
+    createTableRates(data, currency);
   });
 
   $tableCurrency.classList.remove("occult");
@@ -82,15 +75,19 @@ function getBaseCurrency(currency) {
   return `?base=${currency}`;
 }
 
-function getRatesData() {
+function getRates(date, base) {
+  return fetch(requestApiURL + date + base)
+    .then((response) => response.json());
+}
+
+function showRates() {
   const $currencySelect = document.querySelector("#currency-select");
   let selectedDate = validateDate();
   let selectedBaseCurrency = getBaseCurrency($currencySelect.value);
 
-  fetch(requestApiURL + selectedDate + selectedBaseCurrency)
-    .then((response) => response.json())
+  getRates(selectedDate, selectedBaseCurrency)
     .then((data) => {
-      showRates(data);
+      showTableRates(data);
     })
     .catch((error) => console.error("Failed", error));
 }
@@ -160,7 +157,7 @@ document.querySelector("#convert-btn").addEventListener("click", () => {
 });
 
 document.querySelector("#show").addEventListener("click", () => {
-  getRatesData();
+  showRates();
   $formRates.classList.add("occult");
   $ratesFormContainer.classList.add("move-to-top");
   $closeButton.classList.add("move-img");
