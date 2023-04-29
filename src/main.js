@@ -1,3 +1,10 @@
+/*
+import {
+  showRates,
+  validateDate,
+} from "./exchange.js";
+*/
+
 const requestApiURL = "https://api.exchangerate.host/";
 const $ratesFormContainer = document.querySelector(".form-rates-section");
 const $formRates = document.querySelector(".form-rates");
@@ -7,9 +14,6 @@ const $overlay = document.querySelector(".overlay");
 const $backButton = document.querySelector(".back-menu-img");
 const $closeButton = document.querySelector(".close-menu-img");
 
-function getBaseCurrency(currency) {
-  return `?base=${currency}`;
-}
 
 function validateDate() {
   const $inputDate = document.querySelector("#date");
@@ -48,6 +52,18 @@ function showTableRates(data, currency) {
   $tableCurrency.querySelector("tbody").appendChild(currenciesTableRow);
 }
 
+function showRates(data) {
+  const $titleRatesTable = document.querySelector("caption");
+  $titleRatesTable.textContent = `Exchange rates for "${data.base}" in date: ${data.date}`;
+
+  Object.keys(data.rates).forEach((currency) => {
+    showTableRates(data, currency);
+  });
+
+  $tableCurrency.classList.remove("occult");
+  $ratesFormContainer.classList.add("max-height");
+}
+
 function removeTableRates() {
   const $currencyTableRows = document.querySelectorAll(".table-row-currency");
 
@@ -62,16 +78,8 @@ function removeTableRates() {
   });
 }
 
-function showRates(data) {
-  const $titleRatesTable = document.querySelector("caption");
-  $titleRatesTable.textContent = `Exchange rates for "${data.base}" in date: ${data.date}`;
-
-  Object.keys(data.rates).forEach((currency) => {
-    showTableRates(data, currency);
-  });
-
-  $tableCurrency.classList.remove("occult");
-  $ratesFormContainer.classList.add("max-height");
+function getBaseCurrency(currency) {
+  return `?base=${currency}`;
 }
 
 function getRatesData() {
@@ -102,6 +110,11 @@ function showConvertResult(data) {
   resultText.classList.add("visible");
 }
 
+function getConvertData(currencies, amount) {
+  return fetch(requestApiURL + currencies + amount)
+    .then((response) => response.json());
+}
+
 function getConvertCurrenciesData() {
   const $selectFromCurrency = document.querySelector("#from-currency");
   const $selectToCurrency = document.querySelector("#to-currency");
@@ -112,8 +125,7 @@ function getConvertCurrenciesData() {
   );
   let selectedAmount = getAmount($inputAmount.value);
 
-  fetch(requestApiURL + selectedCurrenciesToConvert + selectedAmount)
-    .then((response) => response.json())
+  getConvertData(selectedCurrenciesToConvert, selectedAmount)
     .then((data) => {
       showConvertResult(data);
     })
