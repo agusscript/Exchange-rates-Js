@@ -24,6 +24,15 @@ describe("Exchange rate tests", () => {
     cy.get(".form-rates").should("have.class", "occult");
   });
 
+  it("Verify that the back button works correctly", () => {
+    const backButton = cy.get(".back-menu-img");
+
+    backButton.should("be.visible");
+    backButton.click();
+    cy.get("#rates-table").should("not.be.visible");
+    backButton.should("not.be.visible");
+  });
+
   it("Verify that the close menu button works correctly", () => {
     cy.get(".close-menu-img").then((closeBtn) => {
       closeBtn.click();
