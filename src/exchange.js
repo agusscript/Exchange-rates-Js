@@ -32,9 +32,3 @@ export function getConvertData(currencies, amount) {
   return fetch(requestApiURL + currencies + amount)
     .then((response) => response.json());
 }
-
-export function getFlags(currencyCode) {
-  const flagURL = "https://flagsapi.com/";
-
-  return `${flagURL}${currencyCode}/flat/64.png`;
-}
