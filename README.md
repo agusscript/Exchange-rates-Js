@@ -1,6 +1,7 @@
 # Exchange rate
 
 You can know the price of a country's money in relation to another country's money.
+This application communicates with an external api bringing a list of currency exchanges based on a selected date and currency. This application also allows you to calculate the exchange rate between two currencies by specifying an amount.
 
 ![](images/desktop-design.png)
 
@@ -12,7 +13,11 @@ Users should be able to:
 
 ## Screenshots
 
-![](images/active-states.png)
+![](images/rates-form.png)
+
+![](images/rates-form-active.png)
+
+![](images/convert-form.png)
 
 - Mobile view
 
