@@ -1,3 +1,5 @@
+import { getFlag } from "./flag.js";
+
 export const $ratesFormContainer = document.querySelector(".form-rates-section");
 export const $formRates = document.querySelector(".form-rates");
 export const $convertForm = document.querySelector(".form-convert-section");
@@ -5,12 +7,6 @@ const $tableCurrency = document.querySelector("#rates-table");
 const $overlay = document.querySelector(".overlay");
 export const $backButton = document.querySelector(".back-menu-img");
 export const $closeButton = document.querySelector(".close-menu-img");
-
-function getFlags(currencyCode) {
-  const flagURL = "https://flagsapi.com/";
-
-  return `${flagURL}${currencyCode}/flat/64.png`;
-}
 
 function createTableRates(data, currency) {
   const currenciesTableRow = document.createElement("tr");
@@ -21,7 +17,7 @@ function createTableRates(data, currency) {
 
   flagImage.alt = `${currency} flag`;
   flagImage.classList.add("flag");
-  flagImage.src = getFlags(currency.slice(0, 2));
+  flagImage.src = getFlag(currency.slice(0, 2));
   currencyCell.textContent = currency;
   valueCell.textContent = Math.round(data.rates[currency] * 100) / 100;
 
@@ -40,7 +36,7 @@ export function showTableRates(data) {
     createTableRates(data, currency);
   });
 
-  $tableCurrency.classList.remove("occult");
+  $tableCurrency.classList.remove("hidden");
   $ratesFormContainer.classList.add("max-height");
 }
 
@@ -49,10 +45,10 @@ export function removeTableRates() {
 
   $ratesFormContainer.classList.remove("max-height");
   $ratesFormContainer.classList.remove("move-to-top");
-  $formRates.classList.remove("occult");
-  $tableCurrency.classList.add("occult");
+  $formRates.classList.remove("hidden");
+  $tableCurrency.classList.add("hidden");
   $closeButton.classList.remove("move-img");
-  $backButton.classList.add("occult");
+  $backButton.classList.add("hidden");
   $currencyTableRows.forEach((row) => {
     row.remove();
   });
@@ -68,12 +64,12 @@ export function showConvertResult(data) {
 function hideMenu() {
   $ratesFormContainer.classList.remove("show-to-left");
   $convertForm.classList.remove("show-to-left");
-  $overlay.classList.add("occult");
+  $overlay.classList.add("hidden");
 }
 
 export function showMenu(form) {
   form.classList.add("show-to-left");
-  $overlay.classList.remove("occult");
+  $overlay.classList.remove("hidden");
 }
 
 export function closeMenu() {
@@ -93,9 +89,9 @@ export function moveMenuToTop(menu) {
 }
 
 export function showElement(element) {
-  element.classList.remove("occult");
+  element.classList.remove("hidden");
 }
 
 export function hideElement(element) {
-  element.classList.add("occult");
+  element.classList.add("hidden");
 }
