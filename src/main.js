@@ -1,11 +1,10 @@
 import {
-  validateDate,
   getBaseCurrency,
   getRates,
-  getCurrencysToConvert,
+  getCurrenciesToConvert,
   getAmount,
-  getConvertData
-} from "./exchange.js";
+  getConvertData,
+} from "./api/exchange-api.js";
 
 import {
   showTableRates,
@@ -22,49 +21,56 @@ import {
   $formRates,
   $closeButton,
   $backButton,
-} from "./ui.js";
+} from "./ui/ui.js";
+
+function validateDate() {
+  const $inputDate = document.querySelector("#date");
+  const currentDate = new Date().toJSON().slice(0, 10);
+  $inputDate.setAttribute("max", currentDate);
+  if ($inputDate.value === "") {
+    return currentDate;
+  } else {
+    return $inputDate.value;
+  }
+}
 
 function showRates() {
   const $currencySelect = document.querySelector("#currency-select");
-  let selectedDate = validateDate();
-  let selectedBaseCurrency = getBaseCurrency($currencySelect.value);
+  const date = validateDate();
+  const baseCurrency = getBaseCurrency($currencySelect.value);
 
-  getRates(selectedDate, selectedBaseCurrency)
-    .then((data) => {
-      showTableRates(data);
-    })
+  getRates(date, baseCurrency)
+    .then((data) => showTableRates(data))
     .catch((error) => console.error("Failed", error));
 }
 
 function showConvertedCurrencies() {
-  const $selectFromCurrency = document.querySelector("#from-currency");
-  const $selectToCurrency = document.querySelector("#to-currency");
-  const $inputAmount = document.querySelector("#amount");
-  let selectedCurrenciesToConvert = getCurrencysToConvert(
-    $selectFromCurrency.value,
-    $selectToCurrency.value
+  const $fromCurrencySelect = document.querySelector("#from-currency");
+  const $toCurrencySelect = document.querySelector("#to-currency");
+  const $amountInput = document.querySelector("#amount");
+  const $currenciesToConvert = getCurrenciesToConvert(
+    $fromCurrencySelect.value,
+    $toCurrencySelect.value
   );
-  let selectedAmount = getAmount($inputAmount.value);
+  const amount = getAmount($amountInput.value);
 
-  getConvertData(selectedCurrenciesToConvert, selectedAmount)
-    .then((data) => {
-      showConvertResult(data);
-    })
+  getConvertData($currenciesToConvert, amount)
+    .then((data) => showConvertResult(data))
     .catch((error) => console.error("Failed", error));
 }
 
-document.querySelector("#see-rates-btn").addEventListener("click", () => {
+document.querySelector("#see-rates-btn").onclick = () => {
   showMenu($ratesFormContainer);
   validateDate();
   closeMenu();
-});
+};
 
-document.querySelector("#convert-btn").addEventListener("click", () => {
+document.querySelector("#convert-btn").onclick = () => {
   showMenu($convertForm);
   closeMenu();
-});
+};
 
-document.querySelector("#show").addEventListener("click", () => {
+document.querySelector("#show").onclick = () => {
   showRates();
   hideElement($formRates);
   showElement($backButton);
@@ -72,13 +78,13 @@ document.querySelector("#show").addEventListener("click", () => {
   moveButtonToTop($closeButton);
   moveButtonToTop($backButton);
   event.preventDefault();
-});
+};
 
-$backButton.addEventListener("click", () => {
+$backButton.onclick = () => {
   removeTableRates();
-});
+};
 
-document.querySelector("#convert").addEventListener("click", () => {
+document.querySelector("#convert").onclick = () => {
   showConvertedCurrencies();
   event.preventDefault();
-});
+};

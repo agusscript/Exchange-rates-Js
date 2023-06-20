@@ -1,6 +1,8 @@
-import { getFlag } from "./flag.js";
+import { getFlag } from "../api/flag-api.js";
 
-export const $ratesFormContainer = document.querySelector(".form-rates-section");
+export const $ratesFormContainer = document.querySelector(
+  ".form-rates-section"
+);
 export const $formRates = document.querySelector(".form-rates");
 export const $convertForm = document.querySelector(".form-convert-section");
 const $tableCurrency = document.querySelector("#rates-table");
