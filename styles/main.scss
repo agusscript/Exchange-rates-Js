@@ -141,7 +141,7 @@ main {
     left: -100%;
     transition: all 0.4s;
 
-    .close-menu-btn,
+    .close-rates-btn,
     .back-menu-btn {
       position: absolute;
       padding: 0.3rem 0.5rem;
@@ -158,7 +158,7 @@ main {
       width: 22px;
     }
 
-    .close-menu-btn {
+    .close-rates-btn {
       top: 7.5%;
       right: 4.5%;
     }
@@ -173,7 +173,7 @@ main {
     }
 
     .back-menu-btn:hover,
-    .close-menu-btn:hover {
+    .close-rates-btn:hover {
       cursor: pointer;
       background-color: #ffffff46;
     }
@@ -308,7 +308,7 @@ main {
     transition: all 0.4s;
     left: -100%;
 
-    .close-menu-btn {
+    .close-convert-btn {
       position: absolute;
       top: 7%;
       right: 4.5%;
@@ -325,7 +325,7 @@ main {
       }
     }
 
-    .close-menu-btn:hover {
+    .close-convert-btn:hover {
       cursor: pointer;
       background-color: #ffffff46;
     }
