@@ -141,19 +141,29 @@ main {
     left: -100%;
     transition: all 0.4s;
 
-    .close-menu-img,
-    .back-menu-img {
+    .close-menu-btn,
+    .back-menu-btn {
       position: absolute;
-      width: 22px;
-      opacity: 0.7;
+      padding: 0.3rem 0.5rem;
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.2rem;
     }
 
-    .close-menu-img {
+    .close-menu-img,
+    .back-menu-img {
+      width: 22px;
+    }
+
+    .close-menu-btn {
       top: 7.5%;
       right: 4.5%;
     }
 
-    .back-menu-img {
+    .back-menu-btn {
       top: 7.5%;
       left: 4.5%;
     }
@@ -162,9 +172,10 @@ main {
       top: 3.5%;
     }
 
-    img:hover {
+    .back-menu-btn:hover,
+    .close-menu-btn:hover {
       cursor: pointer;
-      opacity: 1;
+      background-color: #ffffff46;
     }
 
     .form-rates {
@@ -297,17 +308,26 @@ main {
     transition: all 0.4s;
     left: -100%;
 
-    .close-menu-img {
+    .close-menu-btn {
       position: absolute;
-      width: 22px;
       top: 7%;
       right: 4.5%;
-      opacity: 0.7;
+      padding: 0.3rem 0.5rem;
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.2rem;
+
+      .close-menu-img {
+        width: 22px;
+      }
     }
 
-    img:hover {
+    .close-menu-btn:hover {
       cursor: pointer;
-      opacity: 1;
+      background-color: #ffffff46;
     }
 
     .form-convert {
