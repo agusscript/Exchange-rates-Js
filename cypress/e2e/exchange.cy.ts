@@ -2,7 +2,7 @@
 
 describe("Exchange rate tests", () => {
   before(() => {
-    cy.visit("index.html");
+    cy.visit("http://localhost:5173/");
   });
 
   it("Verify that the main page items are showing", () => {
@@ -15,13 +15,13 @@ describe("Exchange rate tests", () => {
 
   it("Verify that the rate table appears correctly", () => {
     cy.get("#see-rates-btn").click();
-    cy.get(".overlay").should("not.have.class", "occult");
+    cy.get(".overlay").should("not.have.class", "hidden");
     cy.get(".form-rates-section").should("have.class", "show-to-left");
 
     cy.get("#show").click();
 
-    cy.get("#rates-table").should("not.have.class", "occult");
-    cy.get(".form-rates").should("have.class", "occult");
+    cy.get("#rates-table").should("not.have.class", "hidden");
+    cy.get(".form-rates").should("have.class", "hidden");
   });
 
   it("Verify that the back button works correctly", () => {
@@ -38,12 +38,12 @@ describe("Exchange rate tests", () => {
       closeBtn.click();
     });
     cy.get(".form-rates-section").should("not.have.class", "show-to-left");
-    cy.get(".overlay").should("have.class", "occult");
+    cy.get(".overlay").should("have.class", "hidden");
   });
 
   it("Verify that the conversion form works correctly", () => {
     cy.get("#convert-btn").click();
-    cy.get(".overlay").should("not.have.class", "occult");
+    cy.get(".overlay").should("not.have.class", "hidden");
     cy.get(".form-convert-section").should("have.class", "show-to-left");
 
     cy.get("#from-currency").type("aud");
@@ -59,6 +59,6 @@ describe("Exchange rate tests", () => {
       closeBtn.click();
     });
     cy.get(".form-rates-section").should("not.have.class", "show-to-left");
-    cy.get(".overlay").should("have.class", "occult");
+    cy.get(".overlay").should("have.class", "hidden");
   });
 });
