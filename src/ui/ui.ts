@@ -21,6 +21,13 @@ type Rates = {
   flagImg: string;
 };
 
+type Convert = {
+  fromCurrency: string;
+  toCurrency: string;
+  amount: number;
+  result: number;
+};
+
 function createTableRates(rates: Rates, index: number) {
   const tableBody = <HTMLTableElement>document.querySelector(".tbody");
   const currenciesTableRow = document.createElement("tr");
@@ -41,11 +48,14 @@ function createTableRates(rates: Rates, index: number) {
   tableBody.appendChild(currenciesTableRow);
 }
 
-function showTableRates(rates: Rates, index: number): void {
+function showTableRates(apiData: Rates, index: number): void {
   const titleRatesTable = <HTMLTableCaptionElement>document.querySelector("caption");
-  titleRatesTable.textContent = `Exchange rates for "${rates.base}" in date: ${rates.date}`;
+  const base: string = apiData.base;
+  const date: Date = apiData.date;
 
-  createTableRates(rates, index);
+  titleRatesTable.textContent = `Exchange rates for "${base}" in date: ${date}`;
+
+  createTableRates(apiData, index);
 
   tableCurrency.classList.remove("hidden");
   ratesFormContainer.classList.add("max-height");
@@ -69,11 +79,19 @@ function removeTableRates() {
   });
 }
 
-function showConvertResult(data: any) {
-  const resultText = <HTMLParagraphElement>document.querySelector(".result-convert");
-  resultText.textContent = `${data.query.amount} ${data.query.from} = 
-  ${Math.round(data.result * 100) / 100} ${data.query.to}`;
-  resultText.classList.add("visible");
+function showConvertResult(apiData: Convert): void {
+  const textResult = <HTMLParagraphElement>document.querySelector(".result-convert");
+  const from: string = apiData.fromCurrency;
+  const to: string = apiData.toCurrency;
+  const amount: number = apiData.amount;
+  const result: number = apiData.result;
+
+  textResult.textContent = `${amount} ${from} =  ${roundNumber(result)} ${to}`;
+  textResult.classList.add("visible");
+}
+
+function roundNumber(number: number): number {
+  return Math.round(number * 100) / 100;
 }
 
 function hideMenu(): void {

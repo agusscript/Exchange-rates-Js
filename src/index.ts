@@ -27,12 +27,13 @@ import {
   getConvertData,
 } from "./api/exchange.js";
 
-import { mapRates } from "./mappers/mapper.js";
+import { mapRates, mapConvert } from "./mappers/mapper.js";
 
 async function showRates(): Promise<void> {
   const currencySelect = <HTMLSelectElement>document.querySelector("#currency-select");
-  const date: string = validateDate();
+
   const baseCurrency: string = getBaseCurrency(currencySelect.value);
+  const date: string = validateDate();
 
   try {
     const dataRatesApi = await getRates(date, baseCurrency);
@@ -58,19 +59,21 @@ function validateDate(): string {
   return inputDate.value === "" ? currentDate : inputDate.value;
 }
 
-function showConvertedCurrencies(): void {
-  const fromCurrencySelect = <HTMLSelectElement>document.querySelector("#from-currency");
-  const toCurrencySelect = <HTMLSelectElement>document.querySelector("#to-currency");
+async function showConvertedCurrencies(): Promise<void> {
+  const fromCurrency = <HTMLSelectElement>document.querySelector("#from-currency");
+  const toCurrency = <HTMLSelectElement>document.querySelector("#to-currency");
   const amountInput = <HTMLInputElement>document.querySelector("#amount");
-  const currenciesToConvert: string = getCurrenciesToConvert(
-    fromCurrencySelect.value,
-    toCurrencySelect.value
-  );
+
+  const currencies: string = getCurrenciesToConvert(fromCurrency.value, toCurrency.value);
   const amount: string = getAmount(amountInput.value);
 
-  getConvertData(currenciesToConvert, amount)
-    .then((data) => showConvertResult(data))
-    .catch((error) => console.error("Failed", error));
+  try {
+    const dataConvertApi = await getConvertData(currencies, amount);
+    const convert = mapConvert(dataConvertApi);
+    showConvertResult(convert);
+  } catch (error) {
+    console.error("Failed", error);
+  }
 }
 
 seeRatesButtonOption.onclick = () => {
