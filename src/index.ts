@@ -18,7 +18,6 @@ import {
   convertButton,
   showButton,
 } from "./ui/ui.js";
-
 import {
   getBaseCurrency,
   getRates,
@@ -26,7 +25,6 @@ import {
   getAmount,
   getConvertData,
 } from "./api/exchange.js";
-
 import { mapRates, mapConvert } from "./mappers/mapper.js";
 
 async function showRates(): Promise<void> {
@@ -64,11 +62,11 @@ async function showConvertedCurrencies(): Promise<void> {
   const toCurrency = <HTMLSelectElement>document.querySelector("#to-currency");
   const amountInput = <HTMLInputElement>document.querySelector("#amount");
 
-  const currencies: string = getCurrenciesToConvert(fromCurrency.value, toCurrency.value);
   const amount: string = getAmount(amountInput.value);
+  const currencies: string = getCurrenciesToConvert(fromCurrency.value, toCurrency.value);
 
   try {
-    const dataConvertApi = await getConvertData(currencies, amount);
+    const dataConvertApi = await getConvertData(amount, currencies);
     const convert = mapConvert(dataConvertApi);
     showConvertResult(convert);
   } catch (error) {

@@ -1,7 +1,7 @@
 export class Rates {
   constructor(
     public base: string,
-    public date: Date,
+    public date: string,
     public country: Array<string>,
     public value: Array<number>,
     public flagImg: Array<string>

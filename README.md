@@ -27,7 +27,7 @@ Users should be able to:
 
 - Deploy [Live site](https://exchange-rates-js.vercel.app/)
 - Hero image from [Lovepik](https://lovepik.com/)
-- API data from [exchangerate-host](https://exchangerate.host/#/)
+- API data from [frankfurter-app](https://www.frankfurter.app/docs/)
 - Flags images from [FlagsApi](https://flagsapi.com/)
 
 ## Built with
