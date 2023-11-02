@@ -17,6 +17,7 @@ import {
   convertButtonOption,
   convertButton,
   showButton,
+  fillOptions,
 } from "./ui/ui.js";
 import {
   getBaseCurrency,
@@ -80,7 +81,12 @@ seeRatesButtonOption.onclick = () => {
   closeMenu(closeRatesButton);
 };
 
-convertButtonOption.onclick = () => {
+convertButtonOption.onclick = async () => {
+  const latestCurrencies = await getRates("latest", "");
+  const options = Object.keys(latestCurrencies.rates);
+  console.log(latestCurrencies);
+
+  fillOptions(options);
   showMenu(convertForm);
   closeMenu(closeConvertButton);
 };

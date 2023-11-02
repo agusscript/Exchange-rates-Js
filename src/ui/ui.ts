@@ -94,6 +94,22 @@ function roundNumber(number: number): number {
   return Math.round(number * 100) / 100;
 }
 
+function fillOptions(values: string[]): void {
+  const inputSelectFrom = <HTMLSelectElement>document.querySelector("#from-currency");
+  const inputSelectTo = <HTMLSelectElement>document.querySelector("#to-currency");
+
+  for (let i = 0; i < values.length; i++) {
+    const newOptionFrom = document.createElement("option");
+    const newOptionTo = document.createElement("option");
+    newOptionFrom.setAttribute("value", values[i]);
+    newOptionFrom.textContent = values[i];
+    newOptionTo.setAttribute("value", values[i]);
+    newOptionTo.textContent = values[i];
+    inputSelectFrom.appendChild(newOptionFrom);
+    inputSelectTo.appendChild(newOptionTo);
+  }
+}
+
 function hideMenu(): void {
   ratesFormContainer.classList.remove("show-to-left");
   convertForm.classList.remove("show-to-left");
@@ -146,4 +162,5 @@ export {
   moveMenuToTop,
   showElement,
   hideElement,
+  fillOptions,
 };
